@@ -13,12 +13,14 @@ export class Engine {
     this.initCanvas()
     this.initResetButton()
 
-
     this.grid = new Grid()
     this.canvas.addEventListener('click', this.handleClick)
     this.resetButton.addEventListener('click', this.grid.reset)
   }
 
+  /**
+  * Creates a canvas element and appends it to canvas-wrapper
+  */
   private initCanvas = () => {
     this.canvas = document.createElement('canvas')
     this.ctx = this.canvas.getContext('2d')
@@ -27,16 +29,24 @@ export class Engine {
     document.getElementById('canvas-wrapper').appendChild(this.canvas)
   }
 
+  /**
+  * Get the reset button dom element
+  */
   private initResetButton = () => {
-    this.resetButton = document.createElement('button')
-    this.resetButton.textContent = 'Reset'
-    document.body.insertBefore(this.resetButton, document.getElementById('canvas-wrapper'))
+    this.resetButton = <HTMLButtonElement>document.getElementById('reset-b')
   }
 
+  /**
+  * Starts the game
+  */
   public start = () => {
     this.gameLoop()
   }
 
+  /**
+  * Finds which section of the grid was clicked
+  * @param {MouseEvent} event
+  */
   public handleClick = (event: MouseEvent) => {
     let cr = 2
     if(event.offsetX <= MAX_GAME_WIDTH/3 * 2) cr = 1
@@ -50,7 +60,9 @@ export class Engine {
   }
 
   /**
-  * Kept the game loop simple
+  * The game loop
+  * This is a simple version of a javascript game loop that uses
+  * window.requestAnimationFrame
   */
   public gameLoop = () => {
     this.ctx.clearRect(0,0, MAX_GAME_WIDTH, MAX_GAME_HEIGHT)

@@ -16,6 +16,11 @@ export class Grid implements Base {
     this.initCells()
   }
 
+  /**
+  * Handler for when a cell is clicked
+  * @param {number} cr - cell row
+  * @param {number} cc = cell column
+  */
   public handleClick = (cr: number, cc: number) => {
     if(this.cells[cr][cc].sign === -1){
       this.cells[cr][cc].sign = Number(this.turn)
@@ -23,6 +28,9 @@ export class Grid implements Base {
     }
   }
 
+  /**
+  * Creates the cells
+  */
   private initCells = () => {
     this.cells = new Array()
 
@@ -34,6 +42,10 @@ export class Grid implements Base {
     }
   }
 
+  /**
+  * Draws the grid
+  * @param {CanvasRenderingContext2D} ctx
+  */
   private draw = (ctx: CanvasRenderingContext2D) => {
     ctx.strokeRect(0, 0, Grid.WIDTH , Grid.HEIGHT)
 
@@ -60,6 +72,10 @@ export class Grid implements Base {
     ctx.stroke()
   }
 
+  /**
+  * Renders the grid and cells
+  * @param {CanvasRenderingContext2D} ctx
+  */
   public render = (ctx: CanvasRenderingContext2D) => {
     this.draw(ctx)
 
@@ -70,6 +86,9 @@ export class Grid implements Base {
     }
   }
 
+  /**
+  * Resets the grid
+  */
   public reset = () => {
     for(let cellRow of this.cells){
       for(let cell of cellRow){

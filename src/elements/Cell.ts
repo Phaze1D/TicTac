@@ -19,7 +19,11 @@ export class Cell implements Base {
     this.column = column
   }
 
-  private drawCross = (ctx) => {
+  /**
+  * Draw a cross
+  * @param {CanvasRenderingContext2D} ctx
+  */
+  private drawCross = (ctx: CanvasRenderingContext2D) => {
     let x = Cell.WIDTH * this.row + Cell.WIDTH/2
     let y = Cell.HEIGHT * this.column + Cell.HEIGHT/2
     let len = Cell.WIDTH/3
@@ -34,7 +38,11 @@ export class Cell implements Base {
     ctx.stroke();
   }
 
-  private drawCircle = (ctx) => {
+  /**
+  * Draw a circle
+  * @param {CanvasRenderingContext2D} ctx
+  */
+  private drawCircle = (ctx: CanvasRenderingContext2D) => {
     let x = Cell.WIDTH * this.row + Cell.WIDTH/2
     let y = Cell.HEIGHT * this.column + Cell.HEIGHT/2
     let len = Cell.WIDTH/3
@@ -44,6 +52,10 @@ export class Cell implements Base {
     ctx.stroke();
   }
 
+  /**
+  * Render the cell onto the canvas
+  * @param {CanvasRenderingContext2D} ctx
+  */
   public render = (ctx: CanvasRenderingContext2D) => {
     if(this.sign === 0){
       this.drawCross(ctx)
