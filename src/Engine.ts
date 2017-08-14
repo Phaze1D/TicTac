@@ -7,6 +7,7 @@ export class Engine {
   private resetButton: HTMLButtonElement
   private ctx: CanvasRenderingContext2D
   private grid: Grid
+  private scale: number = 1
 
 
   constructor(){
@@ -16,6 +17,8 @@ export class Engine {
     this.grid = new Grid()
     this.canvas.addEventListener('click', this.handleClick)
     this.resetButton.addEventListener('click', this.grid.reset)
+    window.addEventListener('resize', this.handleResize)
+    this.handleResize()
   }
 
   /**
@@ -48,15 +51,26 @@ export class Engine {
   * @param {MouseEvent} event
   */
   public handleClick = (event: MouseEvent) => {
+    // console.log(event.offsetX)
+    // console.log(MAX_GAME_WIDTH*this.scale)
+    console.log(MAX_GAME_WIDTH*this.scale)
+
     let cr = 2
-    if(event.offsetX <= MAX_GAME_WIDTH/3 * 2) cr = 1
-    if(event.offsetX <= MAX_GAME_WIDTH/3) cr = 0
+    if(event.offsetX <= MAX_GAME_WIDTH/3 * 2 * this.scale) cr = 1
+    if(event.offsetX <= MAX_GAME_WIDTH/3 * this.scale) cr = 0
 
     let cc = 2
-    if(event.offsetY <= MAX_GAME_HEIGHT/3 * 2) cc = 1
-    if(event.offsetY <= MAX_GAME_HEIGHT/3) cc = 0
+    if(event.offsetY <= MAX_GAME_HEIGHT/3 * 2 * this.scale) cc = 1
+    if(event.offsetY <= MAX_GAME_HEIGHT/3 * this.scale) cc = 0
 
     this.grid.handleClick(cr,cc)
+  }
+
+  public handleResize = (event?: Event) => {
+    console.log(this.canvas.clientWidth)
+    if(this.canvas.clientWidth < MAX_GAME_WIDTH){
+      this.scale = this.canvas.clientWidth/MAX_GAME_WIDTH
+    }
   }
 
   /**
