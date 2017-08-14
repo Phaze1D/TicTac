@@ -26,3 +26,9 @@ button:active {
   align-items: center;
   height: 100vh
 }
+
+
+canvas {
+  width: 100%;
+  max-width: 600px;
+}
