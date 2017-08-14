@@ -1,6 +1,8 @@
 var webpack = require('webpack')
 var path = require('path')
 var ExtractTextPlugin = require("extract-text-webpack-plugin")
+var OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin")
+var UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 
 
 var config = {
@@ -32,21 +34,25 @@ var config = {
         })
      },{
         test: /\.html?$/,
-        use: 'file-loader',
-        exclude: /node_modules/
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]'
+          }
+        }
      }
    ]
-  },
-  devServer: {
-    host: 'localhost',
-    port: 3000,
-    historyApiFallback: true,
-    publicPath: '/',
-    hot: true,
-  },
-  plugins: [
-    new ExtractTextPlugin("styles.css"),
-  ]
+ },
+ plugins: [
+   new ExtractTextPlugin("styles.css"),
+   new OptimizeCssAssetsPlugin({
+     assetNameRegExp: /\.optimize\.css$/g,
+     cssProcessor: require('cssnano'),
+     cssProcessorOptions: { discardComments: {removeAll: true } },
+     canPrint: true
+   }),
+   new UglifyJSPlugin(),
+ ],
 }
 
 
